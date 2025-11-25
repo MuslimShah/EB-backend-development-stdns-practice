@@ -9,7 +9,7 @@ const productSchema = new mongoose.Schema({
   description: { type: String, required: false },
   category: { type: String, required: false },
   inStock: { type: Boolean, default: true },
-  tags: [String],
+  tags: [String],//["electronics", "home-appliance"]
   createdAt: { type: Date, default: Date.now },
 });
 
