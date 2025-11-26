@@ -8,11 +8,12 @@ const connectDb = require("./config/connectDb");
 
 //importing routes
 const productRoutes = require("./routes/productRoutes");
+const authRoutes = require("./routes/authRoutes");
 
 // Middleware to parse JSON bodies
 app.use(express.json());
 app.use(morgan("dev"));
-
+app.use("/auth", authRoutes);
 app.use("/product", productRoutes);
 
 //error hanler
