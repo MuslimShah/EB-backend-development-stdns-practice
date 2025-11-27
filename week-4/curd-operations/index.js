@@ -3,6 +3,7 @@ const app = express();
 require("dotenv").config();
 const morgan = require("morgan");
 const PORT = process.env.PORT || 3000;
+const cors = require("cors");
 //import db connection
 const connectDb = require("./config/connectDb");
 
@@ -10,8 +11,12 @@ const connectDb = require("./config/connectDb");
 const productRoutes = require("./routes/productRoutes");
 const authRoutes = require("./routes/authRoutes");
 
-
 // Middleware to parse JSON bodies
+app.use(
+  cors({
+    origin: "*",
+  })
+);
 app.use(express.json());
 app.use(morgan("dev"));
 app.use("/auth", authRoutes);
