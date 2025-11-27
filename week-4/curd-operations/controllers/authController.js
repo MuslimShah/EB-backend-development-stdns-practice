@@ -68,6 +68,7 @@ exports.loginUser = async (req, res) => {
     const token = jwt.sign(
       {
         userId: user._id,
+        role: user.role,
       },
       process.env.JWT_SECRET,
       {
@@ -75,11 +76,28 @@ exports.loginUser = async (req, res) => {
       }
     );
     //5 return success response with token
-    return res.status(200).json({ message: "Login successful", token });
+    return res
+      .status(200)
+      .json({ message: "Login successful", token, role: user.role });
   } catch (error) {
     console.log(error);
     return res
       .status(500)
       .json({ message: "Failed to login user", error: error.message });
+  }
+};
+
+exports.getMyProfile = async (req, res) => {
+  try {
+    const userId = req.userId;
+    const user = await User.findOne({ _id: userId }).select("-password");
+    // if (!user) {
+    //   return res.status(404).json({ message: "User not found" });
+    // }
+    return res.status(200).json({ profile: user });
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ message: "Failed to fetch profile", error: error.message });
   }
 };

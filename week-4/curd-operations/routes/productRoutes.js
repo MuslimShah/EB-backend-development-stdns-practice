@@ -6,10 +6,13 @@ const {
   updateProduct,
   deleteProduct,
 } = require("../controllers/productController");
+const { auth, userIsAdmin } = require("../middleware/auth");
 
-router.post("/add-product", addProuct);
+router.use(auth);
+
+router.post("/add-product", userIsAdmin, addProuct);
 router.get("/all-products", getAllProducts);
-router.put("/update-product/:id", updateProduct);
-router.delete("/delete-product/:id", deleteProduct);
+router.put("/update-product/:id", userIsAdmin, updateProduct);
+router.delete("/delete-product/:id", userIsAdmin, deleteProduct);
 
 module.exports = router;
